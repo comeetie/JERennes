@@ -1,0 +1,156 @@
+---
+title: "JEGeoVizRennes"
+author: "Etienne Côme"
+date: 6 Janvier 2023
+format: revealjs
+---
+
+## Etienne Côme 
+
+![](https://www.comeetie.fr/assets/img/portrait.png){ width=40% }
+
+Chercheur Université Gustave Eiffel COSYS/GRETTIA </br>
+Stats, Data, Visualisation, Carto, Transports,...</br>
+R,JS,Python,Cpp,...
+
+## 
+
+![](https://flowmap.blue/_next/static/media/powered-by-FlowmapBlue-flat.2baf4a7b.svg){ width=40% }
+
+- Librairie JS Open Source 
+- Basée sur [mapbox-gl](https://github.com/mapbox/mapbox-gl-js) / [deck.gl](http://deck.gl/)
+- Développée par [Ilya boyandin](https://ilya.boyandin.me/)
+- librarie js [flowmap.gl](https://github.com/visgl/flowmap.gl)
+- outil en ligne [flowmap.blue](https://flowmap.blue/)
+
+## Fonctionalités
+
+- orienté web
+- uniquement pour les cartes de flux
+- zoom sémantique
+- filtrage temporel / od
+- orientation / animation
+- outil en ligne (via ram / google-sheet)
+- interfaçable js/R/Shiny
+
+
+## Galerie
+
+![](./flowmapbluegallery.png){ width=80% }
+[https://flowmap.blue/gallery](https://flowmap.blue/gallery)
+
+## Usage, Exploration interactive de données OD volumineuses
+Ex RPC 2022
+
+
+## Préparation des données
+
+Nécessite deux informations:
+
+- Une liste de lieux (id,name,lat,lon)
+- Une liste de flux entre ces lieux (origine,dest,count,**time**)
+- \+ meta-données de configuration de la carte
+
+## Préparation des données
+Un tout petit peu de mise en forme en R:
+```{r,eval=FALSE,echo=TRUE}
+data.start = data |> 
+  rename(id=journey_start_insee, 
+         name=journey_start_town,
+         lat=journey_start_lat,
+         lon=journey_start_lon)
+data.end = data |> 
+  rename(id=journey_end_insee,
+         name=journey_end_town,
+         lat=journey_end_lat,
+         lon=journey_end_lon)
+
+locations_towns = bind_rows(data.start,data.end) |> 
+  group_by(id) |> 
+  summarize(lat=mean(lat),lon=mean(lon),name=first(name)) |> 
+  ungroup() |>select(id,name,lat,lon)
+
+write_csv(locations_towns,"locations_towns.csv")
+```
+
+
+## Préparation des données
+Un tout petit peu de mise en forme en R:
+```{r,eval=FALSE,echo=TRUE}
+flows_towns = data |> 
+  rename(origin=journey_start_insee,dest=journey_end_insee) |>
+  count(origin,dest) |> 
+  rename(count=n) |> 
+  select(origin,dest,count)
+
+write_csv(flows_towns ,"flows_towns.csv")
+```
+
+## Préparation des données
+
+- [https://flowmap.blue/how-to-make-a-flow-map](https://flowmap.blue/how-to-make-a-flow-map)
+- [google sheet](https://docs.google.com/spreadsheets/d/1GWvbYREXnbY5137DIBJ6zEl7bje296rtWxPYnyhRxKQ/edit?usp=sharing)
+- [carte](https://flowmap.blue/1GWvbYREXnbY5137DIBJ6zEl7bje296rtWxPYnyhRxKQ)
+- [https://flowmap.blue/in-browser](https://flowmap.blue/in-browser)
+
+## Modes de représentations et d'interactions avec les données
+
+- Zoom sémantique ! flux interne
+- Filtrage
+- Animation 
+
+## Dimension temporelle
+Un tout petit peu de mise en forme en R:
+```{r,eval=FALSE,echo=TRUE}
+library(lubridate)
+flows_towns_dates = data |> 
+  rename(origin=journey_start_insee,dest=journey_end_insee) |>
+  mutate(time=round_date(journey_start_datetime,"hour")) |>
+  count(origin,dest,time) |> 
+  rename(count=n) |> 
+  select(origin,dest,count,time)
+
+write_csv(flows_towns_dates ,"flows_towns_dates.csv")
+```
+
+
+## Dimension temporelle
+
+- [https://flowmap.blue/how-to-make-a-flow-map](https://flowmap.blue/how-to-make-a-flow-map)
+- [google sheet](https://docs.google.com/spreadsheets/d/1mNzbaqQ6Enjnfl_W-gk5Pag7VxkQXjJgScBQiGZt9mc/edit?usp=sharing)
+- [carte](https://flowmap.blue/1mNzbaqQ6Enjnfl_W-gk5Pag7VxkQXjJgScBQiGZt9mc/)
+- [https://flowmap.blue/in-browser](https://flowmap.blue/in-browser)
+
+
+## Intégration à R
+
+[flowmapblue.R](https://github.com/FlowmapBlue/flowmapblue.R)
+
+```{r,eval=FALSE,echo=TRUE}
+devtools::install_github("FlowmapBlue/flowmapblue.R")
+library(flowmapblue)
+mapboxAccessToken <- 'YOUR_MAPBOX_ACCESS_TOKEN'
+flowmapblue(locations_towns, flows_towns, mapboxAccessToken, 
+            clustering=TRUE, darkMode=TRUE, animation=FALSE)
+```
+
+## Intégration shiny minismaliste
+
+ui :
+
+```{r,eval=FALSE,echo=TRUE}
+mainPanel(
+  flowmapblueOutput("flowMap",height = "800px",width="1000px")
+)
+```
+
+server :
+```{r,eval=FALSE,echo=TRUE}
+output$flowMap <- renderFlowmapblue({
+  flows =rpc$flows |> filter(hour %in% input$hours,day %in% input$days) 
+  flowmapblue(rpc$locations, flows, mapboxAccessToken, darkMode=FALSE)
+})
+```
+
+## Bilan 
+
