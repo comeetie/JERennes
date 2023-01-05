@@ -1,13 +1,19 @@
 ---
 title: "JEGeoVizRennes"
-author: "Etienne Côme"
+author: "Etienne Côme, @comeetie@mapstodon.space"
 date: 6 Janvier 2023
-format: revealjs
+format: 
+  revealjs:
+    theme: [default, uge.scss]
+title-slide-attributes:
+  data-background-image: "./logo_univ_gustave_eiffel_rvb.svg"
+  data-background-size: "25%"
+  data-background-position: "bottom 50px right 100px"
 ---
 
 ## Etienne Côme 
 
-![](https://www.comeetie.fr/assets/img/portrait.png){ width=40% }
+![](https://www.comeetie.fr/assets/img/portrait.png){ width=30% }
 
 Chercheur Université Gustave Eiffel COSYS/GRETTIA </br>
 Stats, Data, Visualisation, Carto, Transports,...</br>
@@ -20,18 +26,18 @@ R,JS,Python,Cpp,...
 - Librairie JS Open Source 
 - Basée sur [mapbox-gl](https://github.com/mapbox/mapbox-gl-js) / [deck.gl](http://deck.gl/)
 - Développée par [Ilya boyandin](https://ilya.boyandin.me/)
-- librarie js [flowmap.gl](https://github.com/visgl/flowmap.gl)
-- outil en ligne [flowmap.blue](https://flowmap.blue/)
+- Librarie js [flowmap.gl](https://github.com/visgl/flowmap.gl)
+- Outil en ligne [flowmap.blue](https://flowmap.blue/)
 
 ## Fonctionalités
 
-- orienté web
-- uniquement pour les cartes de flux
-- zoom sémantique
-- filtrage temporel / od
-- orientation / animation
-- outil en ligne (via ram / google-sheet)
-- interfaçable js/R/Shiny
+- Orienté web
+- Uniquement pour les cartes de flux
+- Zoom sémantique
+- Filtrage temporel / od
+- Orientation / animation
+- Outil en ligne (via ram / google-sheet)
+- Interfaçable js/R/Shiny
 
 
 ## Galerie
@@ -95,9 +101,37 @@ write_csv(flows_towns ,"flows_towns.csv")
 
 ## Modes de représentations et d'interactions avec les données
 
-- Zoom sémantique ! flux interne
+- Zoom sémantique <span style="color:var(--alert-color)">! aux flux internes</span>
 - Filtrage
 - Animation 
+
+
+
+## Zoom sémantique, clustering
+
+![](https://miro.medium.com/max/640/0*wBezECSY50VQZYOU.gif){ height=60% }
+</br>
+
+- [blog de mapbox](https://blog.mapbox.com/clustering-millions-of-points-on-a-map-with-supercluster-272046ec5c97)
+- [vidéo Ilya Boyandin](https://youtu.be/Cr6JtLRmSa8?t=491)
+
+## Zoom sémantique, clustering 
+
+
+![](https://miro.medium.com/max/720/0*6Zr7xpdq4h5fbTR1.webp){ height=60% }
+</br>
+
+- [blog de mapbox](https://blog.mapbox.com/clustering-millions-of-points-on-a-map-with-supercluster-272046ec5c97)
+- [vidéo d'Ilya Boyandin](https://youtu.be/Cr6JtLRmSa8?t=491)
+
+## Zoom sémantique
+
+- Clustering multi-échelle
+- Fluidifie les interactions
+- Limite l'occlusion visuelle
+- Complexifie la comparaison des flux internes (cercles) et externes (flêches)
+- Lecture multi-échelles plus difficile également
+
 
 ## Dimension temporelle
 Un tout petit peu de mise en forme en R:
@@ -154,3 +188,22 @@ output$flowMap <- renderFlowmapblue({
 
 ## Bilan 
 
+- Outils assez simple à prendre en main
+- Aux fonctionalités limités et assez bien définies
+- Facilement intégrable à son propre workflow
+- Zoom sémantique intéressant **même si complexe à lire**
+- Filtrage / lieux / temps efficace
+</br>
+
+<h3 style="color:var(--alert-color)">➜ Outils intéressant pour une première exploration d'un jeu de données volumineux</h3>
+
+
+## Merci :)
+
+</br></br></br>
+<h1>Questions ?</h1>
+</br>
+</br>
+</br>
+</br>
+<div style="text-align:right"><a href="https://mapstodon.space/@comeetie">@comeetie@mapstodon.space</a></div>

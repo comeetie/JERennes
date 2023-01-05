@@ -10,6 +10,7 @@
 library(shiny)
 library(flowmapblue)
 library(dplyr)
+library(ggplot2)
 mapboxAccessToken <- 'pk.eyJ1IjoiY29tZWV0aWUiLCJhIjoiY2xiNmE3dTJrMGI0ZTNub2E3c3RhNWdsbCJ9.eaHsSZnu_0vZD40IUq0DNA'
 rpc=readRDS("../rpc.RDS")
 
@@ -39,23 +40,29 @@ ui <- fluidPage(
               c("lun.","mar.","mer.","jeu.","ven.","sam.","dim."),
               selected =  c("lun.","mar.","mer.","jeu.","ven.","sam.","dim."),
               multiple = TRUE
-            )
+            ),
+            p(textOutput("nbtrajs",inline = TRUE), " trajets réalisés."),
+            plotOutput("hist")
         ),
 
         # flowmap
         mainPanel(
-          flowmapblueOutput("flowMap",height = "800px",width="1000px")
+          flowmapblueOutput("flowMap",height = "800px",width = "auto")
         )
     )
 )
 
 # Define server logic 
 server <- function(input, output) {
-
+    flows =reactive({rpc$flows |> filter(hour %in% input$hours,day %in% input$days)})
     output$flowMap <- renderFlowmapblue({
-      flows =rpc$flows |> filter(hour %in% input$hours,day %in% input$days) 
-      flowmapblue(rpc$locations, flows, mapboxAccessToken, clustering=TRUE, darkMode=FALSE, animation=FALSE)
+      flowmapblue(rpc$locations, flows(), mapboxAccessToken, clustering=TRUE, darkMode=FALSE, animation=FALSE)
     })
+    output$hist <- renderPlot({
+      ggplot(flows())+geom_histogram(aes(x=hour),bins = 24)+theme_bw()+labs(x="heure",y="# trajets",title="Repartition horaire",subtitle="des trajets de covoiturages")
+    })
+    output$nbtrajs <- renderText(sum(flows()$count))
+    
 }
 
 # Run the application 

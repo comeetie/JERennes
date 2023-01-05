@@ -1,0 +1,26 @@
+@font-face {
+  font-family: TTNorms;
+  src: url(../../../../../TTNorms/TTNormsPro-Regular.ttf);
+}
+
+@font-face {
+  font-family: TTNorms-Bold;
+  src: url(../../../../../TTNorms/TTNormsPro-Bold.ttf);
+}
+
+
+:root {
+  --alert-color: #d2213c;
+  --ex-color:#92c56e;
+}
+
+/*-- scss:defaults --*/
+
+
+$mainColor: #0f273b;
+$headingColor:#2f2a85;
+$linkColor: #1eafd0;
+$linkColorHover:#0097d7;
+$selectionColor:#00936e;
+$mainFont: TTNorms,Tahoma,Verdana,Segoe,sans-serif;
+$headingFont:  Source Sans Pro,TTNorms, Helvetica, sans-serif;

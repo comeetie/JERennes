@@ -9,7 +9,7 @@
 <link href="JERennes_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-0.9.649">
 
-  <meta name="author" content="Etienne Côme">
+  <meta name="author" content="Etienne Côme, @comeetie@mapstodon.space">
   <title>JEGeoVizRennes</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -382,16 +382,16 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="center">
+<section id="title-slide" data-background-image="./logo_univ_gustave_eiffel_rvb.svg" data-background-position="bottom 50px right 100px" data-background-size="25%" class="center">
   <h1 class="title">JEGeoVizRennes</h1>
-  <p class="author">Etienne Côme</p>
+  <p class="author">Etienne Côme, <span class="citation" data-cites="comeetie">@comeetie</span><span class="citation" data-cites="mapstodon.space">@mapstodon.space</span></p>
   <p class="date">6 Janvier 2023</p>
 </section>
 
 <section id="etienne-côme" class="slide level2">
 <h2>Etienne Côme</h2>
 
-<img data-src="https://www.comeetie.fr/assets/img/portrait.png" style="width:40.0%" class="r-stretch"><p>Chercheur Université Gustave Eiffel COSYS/GRETTIA <br> Stats, Data, Visualisation, Carto, Transports,…<br> R,JS,Python,Cpp,…</p>
+<img data-src="https://www.comeetie.fr/assets/img/portrait.png" style="width:30.0%" class="r-stretch"><p>Chercheur Université Gustave Eiffel COSYS/GRETTIA <br> Stats, Data, Visualisation, Carto, Transports,…<br> R,JS,Python,Cpp,…</p>
 </section>
 <section id="section" class="slide level2">
 <h2></h2>
@@ -400,20 +400,20 @@
 <li>Librairie JS Open Source</li>
 <li>Basée sur <a href="https://github.com/mapbox/mapbox-gl-js">mapbox-gl</a> / <a href="http://deck.gl/">deck.gl</a></li>
 <li>Développée par <a href="https://ilya.boyandin.me/">Ilya boyandin</a></li>
-<li>librarie js <a href="https://github.com/visgl/flowmap.gl">flowmap.gl</a></li>
-<li>outil en ligne <a href="https://flowmap.blue/">flowmap.blue</a></li>
+<li>Librarie js <a href="https://github.com/visgl/flowmap.gl">flowmap.gl</a></li>
+<li>Outil en ligne <a href="https://flowmap.blue/">flowmap.blue</a></li>
 </ul>
 </section>
 <section id="fonctionalités" class="slide level2">
 <h2>Fonctionalités</h2>
 <ul>
-<li>orienté web</li>
-<li>uniquement pour les cartes de flux</li>
-<li>zoom sémantique</li>
-<li>filtrage temporel / od</li>
-<li>orientation / animation</li>
-<li>outil en ligne (via ram / google-sheet)</li>
-<li>interfaçable js/R/Shiny</li>
+<li>Orienté web</li>
+<li>Uniquement pour les cartes de flux</li>
+<li>Zoom sémantique</li>
+<li>Filtrage temporel / od</li>
+<li>Orientation / animation</li>
+<li>Outil en ligne (via ram / google-sheet)</li>
+<li>Interfaçable js/R/Shiny</li>
 </ul>
 </section>
 <section id="galerie" class="slide level2">
@@ -481,9 +481,35 @@
 <section id="modes-de-représentations-et-dinteractions-avec-les-données" class="slide level2">
 <h2>Modes de représentations et d’interactions avec les données</h2>
 <ul>
-<li>Zoom sémantique ! flux interne</li>
+<li>Zoom sémantique <span style="color:var(--alert-color)">! aux flux internes</span></li>
 <li>Filtrage</li>
 <li>Animation</li>
+</ul>
+</section>
+<section id="zoom-sémantique-clustering" class="slide level2">
+<h2>Zoom sémantique, clustering</h2>
+<p><img data-src="https://miro.medium.com/max/640/0*wBezECSY50VQZYOU.gif" style="height:60.0%"> <br></p>
+<ul>
+<li><a href="https://blog.mapbox.com/clustering-millions-of-points-on-a-map-with-supercluster-272046ec5c97">blog de mapbox</a></li>
+<li><a href="https://youtu.be/Cr6JtLRmSa8?t=491">vidéo Ilya Boyandin</a></li>
+</ul>
+</section>
+<section id="zoom-sémantique-clustering-1" class="slide level2">
+<h2>Zoom sémantique, clustering</h2>
+<p><img data-src="https://miro.medium.com/max/720/0*6Zr7xpdq4h5fbTR1.webp" style="height:60.0%"> <br></p>
+<ul>
+<li><a href="https://blog.mapbox.com/clustering-millions-of-points-on-a-map-with-supercluster-272046ec5c97">blog de mapbox</a></li>
+<li><a href="https://youtu.be/Cr6JtLRmSa8?t=491">vidéo d’Ilya Boyandin</a></li>
+</ul>
+</section>
+<section id="zoom-sémantique" class="slide level2">
+<h2>Zoom sémantique</h2>
+<ul>
+<li>Clustering multi-échelle</li>
+<li>Fluidifie les interactions</li>
+<li>Limite l’occlusion visuelle</li>
+<li>Complexifie la comparaison des flux internes (cercles) et externes (flêches)</li>
+<li>Lecture multi-échelles plus difficile également</li>
 </ul>
 </section>
 <section id="dimension-temporelle" class="slide level2">
@@ -539,6 +565,27 @@
 </section>
 <section id="bilan" class="slide level2">
 <h2>Bilan</h2>
+<ul>
+<li>Outils assez simple à prendre en main</li>
+<li>Aux fonctionalités limités et assez bien définies</li>
+<li>Facilement intégrable à son propre workflow</li>
+<li>Zoom sémantique intéressant <strong>même si complexe à lire</strong></li>
+<li>Filtrage / lieux / temps efficace <br></li>
+</ul>
+<h3 style="color:var(--alert-color)">
+➜ Outils intéressant pour une première exploration d’un jeu de données volumineux
+</h3>
+</section>
+<section id="merci" class="slide level2">
+<h2>Merci :)</h2>
+<br><br><br>
+<h1>
+Questions ?
+</h1>
+<br> <br> <br> <br>
+<div style="text-align:right">
+<a href="https://mapstodon.space/@comeetie"><span class="citation" data-cites="comeetie">@comeetie</span><span class="citation" data-cites="mapstodon.space">@mapstodon.space</span></a>
+</div>
 <div class="footer footer-default">
 
 </div>
