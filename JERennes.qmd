@@ -46,7 +46,7 @@ R,JS,Python,Cpp,...
 [https://flowmap.blue/gallery](https://flowmap.blue/gallery)
 
 ## Usage, Exploration interactive de données OD volumineuses
-Ex RPC 2022
+Ex RPC sur la période de Juillet 2022, 
 
 
 ## Préparation des données
@@ -196,6 +196,17 @@ output$flowMap <- renderFlowmapblue({
 </br>
 
 <h3 style="color:var(--alert-color)">➜ Outils intéressant pour une première exploration d'un jeu de données volumineux</h3>
+
+
+## Avec du temps en +
+
+- Intégration JS/Observable pour une intégration plus fine 
+- Comparaison de période / traitement par mois
+- ...
+</br>
+
+<h3 style="color:var(--alert-color)">➜ Outils intéressant pour une première exploration d'un jeu de données volumineux</h3>
+
 
 
 ## Merci :)
